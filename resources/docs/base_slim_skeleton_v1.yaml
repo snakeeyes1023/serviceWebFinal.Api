@@ -1,0 +1,69 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Base-Slim-Skeleton
+  description: Structure de base d'un api créé dans le cadre du cours Services Web H2022
+  
+servers: 
+  - url: http://localhost/base-slim-skeleton
+paths:
+  /:
+    get:
+      tags:
+        - Général
+      summary: Message de bienvenue
+      responses:
+        '200': 
+          description: 
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                example:
+                    success: true
+                    message : 'Hello world!'
+  
+  /users:
+    post:
+      tags: 
+        - Usagers
+      summary: Création d'un usager.
+      requestBody:
+        description: Les informations de l'usager à créer
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                first_name:
+                  type: string
+                last_name:
+                  type: string
+                email:
+                  type: string
+              example:
+                username : 'mathF'
+                first_name: 'Mathieu'
+                last_name: 'Fréchette'
+                email: 'frechette.mathieu@cegepvicto.ca'
+      responses:
+        '201': 
+          description: Le id de l'usager créé
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user_id:
+                    type: integer
+                example:
+                  id : 1
+  
