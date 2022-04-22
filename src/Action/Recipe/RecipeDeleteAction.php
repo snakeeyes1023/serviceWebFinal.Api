@@ -1,40 +1,41 @@
 <?php
 
-namespace App\Action;
+namespace App\Action\Recipe;
 
-use App\Domain\User\Service\UserCreator;
+use App\Domain\Recipe\Service\RecipeService;
+
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
-final class UserCreateAction
+final class RecipeDeleteAction
 {
-    private $userCreator;
+    private $recipeService;
 
-    public function __construct(UserCreator $userCreator)
+    public function __construct(RecipeService $recipeService)
     {
-        $this->userCreator = $userCreator;
+        $this->recipeService = $recipeService;
     }
 
     public function __invoke(
-        ServerRequestInterface $request, 
+        ServerRequestInterface $request,
         ResponseInterface $response
     ): ResponseInterface {
+
         // Collect input from the HTTP request
-        $data = (array)$request->getParsedBody();
+        $id = (int)$request->getAttributes()["id"];
 
         // Invoke the Domain with inputs and retain the result
-        $userId = $this->userCreator->createUser($data);
+        $result = $this->recipeService->deleteRecipe($id);
 
         // Transform the result into the JSON representation
-        $result = [
-            'user_id' => $userId
-        ];
 
         // Build the HTTP response
         $response->getBody()->write((string)json_encode($result));
 
+
+
         return $response
             ->withHeader('Content-Type', 'application/json')
-            ->withStatus(201);
+            ->withStatus(200);
     }
 }
