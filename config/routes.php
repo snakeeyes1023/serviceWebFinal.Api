@@ -8,10 +8,15 @@ use Slim\App;
 
 return function (App $app) {
 
-    $app->get('/user/{id}', \App\Action\UserActions\UserAction::class);
 
     $app->get('/recipes', \App\Action\Recipe\RecipeFetchAction::class);
     
+    $app->post('/recipe', \App\Action\Recipe\RecipeCreateAction::class);
+
+    $app->put('/recipe', \App\Action\Recipe\RecipeUpdateAction::class);
+
+    $app->delete('/recipe', \App\Action\Recipe\RecipeDeleteAction::class);
+
     $app->get('/cle_api', \App\Action\UserActions\UserApiTokenAction::class);
 
     // Documentation de l'api
