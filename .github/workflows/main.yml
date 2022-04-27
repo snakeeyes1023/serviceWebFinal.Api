@@ -11,6 +11,6 @@ jobs:
     - name: 📂 Sync files
       uses: SamKirkland/FTP-Deploy-Action@4.3.0
       with:
-        server: ftp.jonathan.com
+        server: ftp.jonathancote.com
         username: recipeapi@recipeapi.jonathancote.ca
         password: Cn~n@4B}f-sw
