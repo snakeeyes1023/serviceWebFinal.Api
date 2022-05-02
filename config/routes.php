@@ -23,8 +23,6 @@ return function (App $app) {
     //RECIPE TYPE
     $app->get('/recipe-type', \App\Action\RecipeType\RecipeTypeFetchAction::class);
 
-    $app->get('/cle_api', \App\Action\UserActions\UserApiTokenAction::class);
-
     // Documentation de l'api
     $app->get('/docs', \App\Action\Docs\SwaggerUiAction::class);
 

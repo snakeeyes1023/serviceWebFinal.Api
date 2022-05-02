@@ -1,69 +1,238 @@
 openapi: 3.0.0
 info:
   version: 1.0.0
-  title: Base-Slim-Skeleton
-  description: Structure de base d'un api créé dans le cadre du cours Services Web H2022
+  title: Api de recette
+  description: Api pour gérer des recettes de tous genre
   
 servers: 
-  - url: http://localhost/base-slim-skeleton
+  - url: http://localhost/serviceWebFinal.Api
 paths:
-  /:
+  /recipes:
     get:
       tags:
-        - Général
-      summary: Message de bienvenue
+        - Recette
+      summary: Obtenir tous les recettes
       responses:
-        '200': 
-          description: 
+        '200':
+          description: ""
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                  message:
-                    type: string
-                example:
-                    success: true
-                    message : 'Hello world!'
-  
-  /users:
+                $ref: "#/definitions/Recipe"
+  /recipes?id={id}:
+    get:
+      tags:
+        - Recette
+      summary: Obtenir un recette particuliaire
+      responses:
+        '200':
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/definitions/RecipeExtend"
+      parameters:
+        - name: "Id"
+          in: "path"
+          description: "Le Id de la recette à selectionner. "
+          required: true
+          type: "number"
+  /recipe:
     post:
-      tags: 
-        - Usagers
-      summary: Création d'un usager.
-      requestBody:
-        description: Les informations de l'usager à créer
+      tags:
+      - "Recette"
+      summary: "Ajouter une nouvelle recette"
+      description: ""
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "La liste des informations de la recette"
         required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                username:
-                  type: string
-                first_name:
-                  type: string
-                last_name:
-                  type: string
-                email:
-                  type: string
-              example:
-                username : 'mathF'
-                first_name: 'Mathieu'
-                last_name: 'Fréchette'
-                email: 'frechette.mathieu@cegepvicto.ca'
+        schema:
+          $ref: "#/definitions/RecipeExtend"
       responses:
-        '201': 
-          description: Le id de l'usager créé
+        "405":
+          description: "Information invalide"
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  user_id:
-                    type: integer
-                example:
-                  id : 1
-  
+                $ref: "#/definitions/OperationResultError"
+        "201":
+          description: "Recette créer"
+          content:
+            application/json:
+              schema:
+                $ref: "#/definitions/OperationResult"
+  /recipe/{id}:
+    post:
+      tags:
+      - "Recette"
+      summary: "Modifier une recette"
+      description: ""
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "Id"
+        description: "Le Id de la recette à selectionner. "
+        required: true
+        type: "number"    
+
+      - in: "body"
+        name: "body"
+        description: "La liste des informations de la recette"
+        required: true
+        schema:
+          $ref: "#/definitions/RecipeExtend"
+      responses:
+        "500":
+          description: "Information invalide"
+          content:
+            application/json:
+              schema:
+                $ref: "#/definitions/OperationResultError" 
+        "200":
+          description: "Recette as bien été modifiée"
+          content:
+            application/json:
+              schema:
+                $ref: "#/definitions/OperationResult" 
+    delete:
+      tags:
+      - "Recette"
+      summary: "Supprimer une recette"
+      description: ""
+      produces:
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "Id"
+        description: "Le Id de la recette à selectionner. "
+        required: true
+        type: "number"  
+      responses:
+        '200':
+          description: "Recette bien supprimée"
+          content:
+            application/json:
+              schema:
+                $ref: "#/definitions/OperationResult"  
+        '500':
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/definitions/OperationResultError" 
+  /recipe-type:
+    get:
+      tags:
+        - Type de recette
+      summary: Obtenir tous les types de recette
+      responses:
+        '200':
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/definitions/RecipeType"
+
+definitions:
+  RecipeType:
+    type: "object"
+    properties:
+      Id:
+        type: "integer"
+        format: "int32"
+      Name:
+        type: "string"
+    xml:
+      name: "RecipeType"
+  Recipe:
+    type: "object"
+    properties:
+      Id:
+        type: "integer"
+        format: "int32"
+      Name:
+        type: "string"
+      TypeName:
+        type: "string"
+      TimeCook:
+        type: "integer"
+        format: "int32"
+      TimePrep:
+        type: "integer"
+        format: "int32"
+      Instructions:
+        type: "string"
+      Ingredients:
+        type: "string"
+      Note:
+        type: "string"
+      Tags:
+        type: "string"
+    xml:
+      name: "Recipe"
+
+  RecipeExtend:
+    required:
+    - "name"
+    - "Type"
+    - "TimeCook"
+    - "TimePrep"
+    - "Instructions"
+    - "Ingredients"
+    type: "object"
+    properties:
+      Id:
+        type: "integer"
+        format: "int32"
+      Name:
+        type: "string"
+      Type:
+        type: "integer"
+        format: "int32"
+      TimeCook:
+        type: "integer"
+        format: "int32"
+      TimePrep:
+        type: "integer"
+        format: "int32"
+      Instructions:
+        type: "string"
+      Ingredients:
+        type: "string"
+      Note:
+        type: "string"
+      Tags:
+        type: "string"
+    xml:
+      name: "RecipeExtend"
+
+  OperationResult:
+    type: "object"
+    properties:
+      success:
+        type: "boolean"
+        default: true
+      Message:
+        type: "string"
+    xml:
+      name: "OperationResult"
+
+  OperationResultError:
+    type: "object"
+    properties:
+      success:
+        type: "boolean"
+        default: false
+      Message:
+        type: "string"
+    xml:
+      name: "OperationResultError"
