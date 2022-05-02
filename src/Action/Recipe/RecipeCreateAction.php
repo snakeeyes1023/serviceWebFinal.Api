@@ -22,24 +22,12 @@ final class RecipeCreateAction
     ): ResponseInterface {
         
         $data = (array)$request->getParsedBody();
-
-        $result = [
-            'success' => false,
-            'message' => '',
-        ];
         
-        $recipeId = $this->recipeService->createRecipe($data);
+        $creationResponse = $this->recipeService->createRecipe($data);
         // Invoke the Domain with inputs and retain the result
 
-        if($recipeId != 0){
-            $result = [
-                'recipe_id' => $recipeId,
-                'result' => 'success',
-                'message' => 'Recipe created!',
-            ];
-        }
 
-        $response->getBody()->write((string)json_encode($result));
+        $response->getBody()->write((string)json_encode($creationResponse));
               
         
         return $response

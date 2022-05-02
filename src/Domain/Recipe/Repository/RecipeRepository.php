@@ -34,23 +34,25 @@ class RecipeRepository
     public function insertRecipe(array $recipe): int
     {
         $row = [
-            'name' => $recipe['name'],
-            'recipe_type_id' => $recipe['recipe_type_id'],
-            'time_cook' => $recipe['time_cook'],
-            'time_prep' => $recipe['time_prep'],
-            'instructions' => $recipe['instructions'],
-            'note' => $recipe['note'],
-            'tags' => $recipe['tags'],
+            'name' => $recipe['Name'],
+            'recipe_type_id' => $recipe['RecipeTypeId'],
+            'time_cook' => $recipe['TimeCook'],
+            'time_prep' => $recipe['TimePrep'],
+            'ingredients' => $recipe['Ingredients'],
+            'instructions' => $recipe['Instructions'],
+            'note' => $recipe['Note'],
+            'tags' => $recipe['Tags'],
         ];
 
         $sql = "INSERT INTO recipe SET 
-                name=:name, 
-                recipe_type_id=:recipe_type_id, 
-                time_cook=:time_cook, 
-                time_prep=:time_prep, 
-                instructions=:instructions, 
-                note=:note, 
-                tags=:tags;";
+                Name=:name, 
+                RecipeTypeId=:recipe_type_id, 
+                TimeCook=:time_cook, 
+                TimePrep=:time_prep, 
+                Ingredients=:ingredients,
+                Instructions=:instructions, 
+                Note=:note, 
+                Tags=:tags;";
 
         $this->connection->prepare($sql)->execute($row);
 
@@ -67,26 +69,28 @@ class RecipeRepository
     public function updateRecipe(array $recipe): void
     {
         $row = [
-            'id' => $recipe['id'],
-            'name' => $recipe['name'],
-            'recipe_type_id' => $recipe['recipe_type_id'],
-            'time_cook' => $recipe['time_cook'],
-            'time_prep' => $recipe['time_prep'],
-            'instructions' => $recipe['instructions'],
-            'note' => $recipe['note'],
-            'tags' => $recipe['tags'],
+            'id' => $recipe['Id'],
+            'name' => $recipe['Name'],
+            'recipe_type_id' => $recipe['RecipeTypeId'],
+            'time_cook' => $recipe['TimeCook'],
+            'time_prep' => $recipe['TimePrep'],
+            'instructions' => $recipe['Instructions'],
+            'ingredients' => $recipe['Ingredients'],
+            'note' => $recipe['Note'],
+            'tags' => $recipe['Tags'],
         ];
 
         $sql = "UPDATE recipe SET 
-                name=:name, 
-                recipe_type_id=:recipe_type_id, 
-                time_cook=:time_cook, 
-                time_prep=:time_prep, 
-                instructions=:instructions, 
-                note=:note, 
-                tags=:tags 
-                WHERE id=:id;";
-
+                Name=:name, 
+                RecipeTypeId=:recipe_type_id, 
+                TimeCook=:time_cook, 
+                TimePrep=:time_prep, 
+                Instructions=:instructions, 
+                Ingredients=:ingredients,
+                Note=:note, 
+                Tags=:tags 
+                WHERE Id=:id;";
+        
         $this->connection->prepare($sql)->execute($row);
     }
 
@@ -97,7 +101,7 @@ class RecipeRepository
      */
     public function getAllRecipes(): array
     {
-        $sql = "SELECT recipe.Id, recipe.Name, recipetype.Name as TypeName, recipe.TimeCook, recipe.TimePrep, recipe.Instructions, recipe.Note, recipe.Tags FROM recipe INNER JOIN recipetype ON recipetype.Id = recipe.RecipeTypeId ;";
+        $sql = "SELECT recipe.Id, recipe.Name, recipetype.Name as TypeName, recipe.TimeCook, recipe.TimePrep, recipe.Instructions, recipe.Note, recipe.Tags, recipe.Ingredients FROM recipe INNER JOIN recipetype ON recipetype.Id = recipe.RecipeTypeId ;";
 
         $statement = $this->connection->prepare($sql);
 
@@ -114,7 +118,7 @@ class RecipeRepository
      */
     public function getRecipeById(int $id): array
     {
-        $sql = "SELECT recipe.Id, recipe.Name, recipetype.Name as TypeName, recipe.TimeCook, recipe.TimePrep, recipe.Instructions, recipe.Note, recipe.Tags FROM recipe INNER JOIN recipetype ON recipetype.Id = recipe.RecipeTypeId WHERE recipe.Id = :id;";
+        $sql = "SELECT recipe.Id, recipe.Name, recipetype.Name as TypeName, recipe.TimeCook, recipe.TimePrep, recipe.Instructions, recipe.Ingredients, recipe.Note, recipe.Tags FROM recipe INNER JOIN recipetype ON recipetype.Id = recipe.RecipeTypeId WHERE recipe.Id = :id;";
 
         $statement = $this->connection->prepare($sql);
 

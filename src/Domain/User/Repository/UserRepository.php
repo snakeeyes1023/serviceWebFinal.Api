@@ -71,7 +71,7 @@ class UserRepository
 
         $result = $query->fetchAll(PDO::FETCH_ASSOC);
 
-        if($result.length === 0) {
+        if($result === 0) {
             return null;
         }
         

@@ -30,19 +30,38 @@ final class RecipeService
      * 
      * @param array $data The form data
      */
-    public function createRecipe(array $data): bool
+    public function createRecipe(array $data): array
     {
+        // result
+        $result = [
+            'success' => false,
+            'message' => '',
+            'createId' => 0
+        ];
+
+
         try {
             $this->validateNewRecipe($data);
+
+            $data["Tags"] ?? "";
+            $data["Note"] ?? "";
 
             // Insert recipe
             $recipeId = $this->repository->insertRecipe($data);
 
-            return $recipeId;
+            // Set result
+            $result['success'] = true;
+            $result['message'] = 'Recipe created';
+            $result['createId'] = $recipeId;
+
+            return $result;
         } catch (ValidationException $e) {
+
+            $result['message'] = $e->getMessage();
+
             // Logging here: Validation error
             //$this->logger->error(sprintf('Validation error: %s', $e->getMessage()));
-            return 0;
+            return $result;
         }
     }
 
@@ -51,25 +70,40 @@ final class RecipeService
      * 
      * @param array $data The form data
      * 
-     * @return bool
+     * @return array
      */
-    public function updateRecipe(array $data): bool
+    public function updateRecipe(array $data): array
     {
+        $result = [
+            'success' => false,
+            'message' => ''
+        ];
+
         try {
+
+            $data["Tags"] ?? "";
+            $data["Note"] ?? "";
+            
             $this->validateNewRecipe($data);
 
-            if (empty($data['id'] ?? 0)) {
+            if (empty($data['Id'] ?? 0)) {
                 throw new ValidationException("Recipe ID is required");
             }
 
             // Update recipe
             $this->repository->updateRecipe($data);
 
-            return true;
+            // Set result
+            $result['success'] = true;
+            $result['message'] = 'Recipe updated';
+
+            return $result;
         } catch (ValidationException $e) {
+
+            $result['message'] = $e->getMessage();
             // Logging here: Validation error
             //$this->logger->error(sprintf('Validation error: %s', $e->getMessage()));
-            return false;
+            return $result;
         }
     }
 
@@ -88,6 +122,13 @@ final class RecipeService
 
             // Delete recipe
             $this->repository->deleteRecipe($id);
+
+            // Set result
+            $result = [
+                'success' => true,
+                'message' => 'Recipe deleted'
+            ];
+            return $result;
 
         } catch (ValidationException $e) {
             
@@ -130,36 +171,34 @@ final class RecipeService
     {
         $errors = [];
 
-        if (empty($data['name'])) {
+        if (empty($data['Name'])) {
             $errors['name'] = 'Name is required';
         }
 
-        if (empty($data['recipe_type_id'])) {
-            $errors['recipe_type_id'] = 'Recipe type is required';
+        if (empty($data['RecipeTypeId'])) {
+            $errors['RecipeTypeId'] = 'Recipe type is required';
         }
 
-        if (empty($data['time_cook'])) {
-            $errors['time_cook'] = 'Time to cook is required';
+        if (empty($data['TimeCook'])) {
+            $errors['TimeCook'] = 'Time to cook is required';
         }
 
-        if (empty($data['time_prep'])) {
-            $errors['time_prep'] = 'Time to prep is required';
+        if (empty($data['TimePrep'])) {
+            $errors['TimePrep'] = 'Time to prep is required';
         }
 
-        if (empty($data['instructions'])) {
-            $errors['instructions'] = 'Instructions are required';
+        if (empty($data['Ingredients'])) {
+            $errors['Ingredients'] = 'Ingredients is required';
         }
 
-        if (empty($data['note'])) {
-            $errors['note'] = 'Note is required';
-        }
-
-        if (empty($data['tags'])) {
-            $errors['tags'] = 'Tags are required';
+        if (empty($data['Instructions'])) {
+            $errors['Instructions'] = 'Instructions are required';
         }
 
         if (!empty($errors)) {
-            throw new ValidationException($errors . implode(', ', $errors));
+            throw new ValidationException($data. implode(', ', $data));
+
+            //throw new ValidationException($errors . implode(', ', $errors));
         }
     }
 }

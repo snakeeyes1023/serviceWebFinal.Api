@@ -23,18 +23,10 @@ final class RecipeUpdateAction
         
         $data = (array)$request->getParsedBody();
 
-        $result = [
-            'success' => false,
-            'message' => '',
-        ];
-        
-        // Invoke the Domain with inputs and retain the result
-        if($this->recipeService->updateRecipe($data)){
-            $result = [
-                'result' => 'success',
-                'message' => 'User updated!',
-            ];
-        }
+        $id = (int)$request->getAttributes()["id"];
+        $data["Id"] = $id;
+
+        $result = $this->recipeService->updateRecipe($data);
 
         $response->getBody()->write((string)json_encode($result));
               

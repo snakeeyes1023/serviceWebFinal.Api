@@ -27,8 +27,6 @@ final class RecipeDeleteAction
         // Invoke the Domain with inputs and retain the result
         $result = $this->recipeService->deleteRecipe($id);
 
-        // Transform the result into the JSON representation
-
         // Build the HTTP response
         $response->getBody()->write((string)json_encode($result));
 
