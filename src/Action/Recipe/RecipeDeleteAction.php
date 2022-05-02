@@ -30,10 +30,15 @@ final class RecipeDeleteAction
         // Build the HTTP response
         $response->getBody()->write((string)json_encode($result));
 
+        $responseCode = 200;
+
+        if(!(bool)$result["success"]) {
+            $responseCode = 204;
+        }
 
 
         return $response
             ->withHeader('Content-Type', 'application/json')
-            ->withStatus(200);
+            ->withStatus($responseCode);
     }
 }

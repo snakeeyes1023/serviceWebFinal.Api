@@ -23,7 +23,6 @@ final class RecipeTypeFetchAction
 
         $recipeType = $this->recipeTypeService->getRecipeType();
 
-        // create api result structure number of data
         $result = [
             'count' => count($recipeType),
             'results' => $recipeType

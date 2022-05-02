@@ -118,7 +118,7 @@ class RecipeRepository
      */
     public function getRecipeById(int $id): array
     {
-        $sql = "SELECT recipe.Id, recipe.Name, recipetype.Name as TypeName, recipe.TimeCook, recipe.TimePrep, recipe.Instructions, recipe.Ingredients, recipe.Note, recipe.Tags FROM recipe INNER JOIN recipetype ON recipetype.Id = recipe.RecipeTypeId WHERE recipe.Id = :id;";
+        $sql = "SELECT recipe.Id, recipe.Name, recipetype.Name as TypeName, recipetype.Id as Type, recipe.TimeCook, recipe.TimePrep, recipe.Instructions, recipe.Ingredients, recipe.Note, recipe.Tags FROM recipe INNER JOIN recipetype ON recipetype.Id = recipe.RecipeTypeId WHERE recipe.Id = :id;";
 
         $statement = $this->connection->prepare($sql);
 

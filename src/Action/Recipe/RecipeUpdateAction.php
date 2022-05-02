@@ -30,9 +30,14 @@ final class RecipeUpdateAction
 
         $response->getBody()->write((string)json_encode($result));
               
+        $responseCode = 200;
+
+        if(!(bool)$result["success"]) {
+            $responseCode = 500;
+        }
         
         return $response
             ->withHeader('Content-Type', 'application/json')
-            ->withStatus(200);
+            ->withStatus($responseCode);
     }
 }

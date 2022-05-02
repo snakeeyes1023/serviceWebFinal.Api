@@ -26,6 +26,14 @@ final class RecipeFetchAction
         if(isset($id) && !empty($id)) {
             $recipe = $this->recipeService->getRecipeById($id);
             
+            if(!$recipe) {
+                $response->getBody()->write((string)json_encode(["error" => "Recipe not found"]));
+                
+                return $response
+                    ->withHeader('Content-Type', 'application/json')
+                    ->withStatus(404);
+            }
+            
             $response->getBody()->write((string)json_encode($recipe));
 
         } else {

@@ -22,16 +22,19 @@ final class RecipeCreateAction
     ): ResponseInterface {
         
         $data = (array)$request->getParsedBody();
-        
-        $creationResponse = $this->recipeService->createRecipe($data);
-        // Invoke the Domain with inputs and retain the result
+        $responseCode = 201;
 
+        $creationResponse = $this->recipeService->createRecipe($data);
+
+        if(!$creationResponse) {
+            $responseCode = 500;
+        }
 
         $response->getBody()->write((string)json_encode($creationResponse));
               
         
         return $response
             ->withHeader('Content-Type', 'application/json')
-            ->withStatus(200);
+            ->withStatus($responseCode);
     }
 }
