@@ -33,10 +33,10 @@ $settings['error'] = [
 // Database settings
 $settings['db'] = [
     'driver' => 'mysql',
-    'host' => 'localhost',
-    'username' => 'root',
-    'database' => 'recipefinal',
-    'password' => 'mysql',
+    'host' => $_ENV['host'],
+    'username' => $_ENV['username'],
+    'database' => $_ENV['database'],
+    'password' => $_ENV['password'],
     'charset' => 'utf8',
     'collation' => 'utf8_general_ci',
     'flags' => [
