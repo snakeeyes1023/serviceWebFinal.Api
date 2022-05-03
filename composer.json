@@ -24,7 +24,8 @@
     },
     "config": {
         "process-timeout": 0,
-        "sort-packages": true
+        "sort-packages": true,
+        "platform-check": false
     },
     "scripts": {
         "test": "phpunit --configuration phpunit.xml --testdox",
