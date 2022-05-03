@@ -1,6 +1,14 @@
 on: push
 name: 🚀 Deploy website on push
 jobs:
+  #Build the projects
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: php-actions/composer@v6
+  #publish the projects
   web-deploy:
     name: 🎉 Deploy
     runs-on: ubuntu-latest
