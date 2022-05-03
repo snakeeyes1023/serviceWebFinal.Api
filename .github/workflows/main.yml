@@ -6,8 +6,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - uses: php-actions/composer@v6
+    - uses: "ramsey/composer-install@v2"
   #publish the projects
   web-deploy:
     name: 🎉 Deploy
