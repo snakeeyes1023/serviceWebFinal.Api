@@ -79,11 +79,7 @@ final class RecipeService
             'message' => ''
         ];
 
-        try {
-
-            $data["Tags"] ?? "";
-            $data["Note"] ?? "";
-            
+        try {            
             $this->validateNewRecipe($data);
 
             if (empty($data['Id'] ?? 0)) {

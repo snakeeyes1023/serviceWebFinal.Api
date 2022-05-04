@@ -10,16 +10,16 @@ class RecipeTypeFetchActionTest extends TestCase
 
     public function testRecipeTypeFetch_Correct_Result(): void
     {
-       //Create recipe
+        
+        //Create recipe
         $request = $this->createJsonRequest('GET', '/recipe-type');
 
         // On effectue la requête et récupère le résultat
         $response = $this->app->handle($request);
 
         $this->assertSame(200, $response->getStatusCode());
-        var_dump($response);
-        // J'affirme que les valeurs de retour correspondent à ce qui est attendu
 
-        $this->assertNotSame((int)$response["count"], 0);
+        // J'affirme que les valeurs de retour correspondent à ce qui est attendu
+        $this->assertNotSame((int)json_decode((string)$response->getBody())->count, 0);
     }
 }

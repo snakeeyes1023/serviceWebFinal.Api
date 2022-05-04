@@ -50,9 +50,11 @@ return [
         return new PDO($dsn, $username, $password, $flags);
     },
     
+    /*
     LoggerFactory::class => function (ContainerInterface $container) {
         return new LoggerFactory($container->get('settings')['logger']);
     },
+    */
 
     // Twig templates
     Twig::class => function (ContainerInterface $container) {

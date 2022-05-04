@@ -26,7 +26,7 @@ final class RecipeCreateAction
 
         $creationResponse = $this->recipeService->createRecipe($data);
 
-        if(!$creationResponse) {
+        if(!(bool)$creationResponse["success"]) {
             $responseCode = 500;
         }
 

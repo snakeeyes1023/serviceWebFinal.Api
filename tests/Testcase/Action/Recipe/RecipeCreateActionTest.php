@@ -13,24 +13,21 @@ class RecipeCreateActionTest extends TestCase
     {
        //Create recipe
         $request = $this->createJsonRequest('POST', '/recipe', [
-            "Id" => 0,
             "Name" => "Brownie UnitTest",
-            "Type" => 3,
+            "RecipeTypeId" => 3,
             "TimeCook" => 20,
             "TimePrep" => 10,
             "Instructions" => "Custom instructions",
-            "Ingredients" => "Custom ingredients",
-            "Note" => "My note",
-            "Tags" => "My tags"
+            "Ingredients" => "Custom ingredients"
         ]);
 
         // On effectue la requête et récupère le résultat
         $response = $this->app->handle($request);
 
-        $this->assertSame(201, $response->getStatusCode());
-        var_dump($response);
         // J'affirme que les valeurs de retour correspondent à ce qui est attendu
+        $this->assertSame(201, $response->getStatusCode());
 
-        $this->assertNotSame((bool)$response["success"], false);
+        // J'affirme que les valeurs de retour correspondent à ce qui est attendu
+        $this->assertSame((bool)json_decode((string)$response->getBody())->success, true);
     }
 }

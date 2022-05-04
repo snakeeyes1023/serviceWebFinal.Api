@@ -3,7 +3,7 @@
 // Constante du mode de l'application
 // dev : variables utilisées en local
 // prod : pour le déploiement de l'api en production
-define("MODE", "prod");
+define("MODE", "dev");
 
 switch (MODE) {
     case "dev":

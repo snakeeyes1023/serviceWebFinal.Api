@@ -11,16 +11,17 @@ class RecipeDeleteActionTest extends TestCase
 
     public function testRecipeDelete_Correct_Result(): void
     {
-       //Create recipe
-        $request = $this->createJsonRequest('DELETE', '/recipe/36');
+        // Delete recipe append authorization header
+        $request = $this->createJsonRequest('DELETE', '/recipe/36')
+        ->withHeader('Authorization', 'cd3d856e-ea00-4136-8e05-8c8decb31166');
 
         // On effectue la requête et récupère le résultat
         $response = $this->app->handle($request);
 
-        $this->assertSame(200, $response->getStatusCode());
-        var_dump($response);
         // J'affirme que les valeurs de retour correspondent à ce qui est attendu
-
-        $this->assertNotSame((bool)$response["success"], false);
+        $this->assertSame(200, $response->getStatusCode());
+        
+        // J'affirme que les valeurs de retour correspondent à ce qui est attendu
+        $this->assertSame((bool)json_decode((string)$response->getBody())->success, true);
     }
 }
