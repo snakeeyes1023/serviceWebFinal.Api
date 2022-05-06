@@ -96,7 +96,7 @@ final class RecipeService
             return $result;
         } catch (ValidationException $e) {
 
-            $result['message'] = $e->getMessage();
+            $result['message'] = $data;
             // Logging here: Validation error
             //$this->logger->error(sprintf('Validation error: %s', $e->getMessage()));
             return $result;
