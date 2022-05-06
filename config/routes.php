@@ -15,7 +15,7 @@ return function (App $app) {
     
     $app->post('/recipe', \App\Action\Recipe\RecipeCreateAction::class);
 
-    $app->post('/recipe/{id}', \App\Action\Recipe\RecipeUpdateAction::class);
+    $app->put('/recipe/{id}', \App\Action\Recipe\RecipeUpdateAction::class);
 
     $app->delete('/recipe/{id}', \App\Action\Recipe\RecipeDeleteAction::class)->add(AuthorizeTokenMiddleware::class);
 

@@ -1,5 +1,4 @@
 <?php 
-
 // Constante du mode de l'application
 // dev : variables utilisées en local
 // prod : pour le déploiement de l'api en production
