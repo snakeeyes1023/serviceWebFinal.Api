@@ -13,7 +13,7 @@ class RecipeUpdateActionTest extends TestCase
     {
         
        //Update recipe
-        $request = $this->createJsonRequest('POST', '/recipe/36', [
+        $request = $this->createJsonRequest('PUT', '/recipe/36', [
             "Name" => "Brownie UnitTest",
             "RecipeTypeId" => 3,
             "TimeCook" => 20,
