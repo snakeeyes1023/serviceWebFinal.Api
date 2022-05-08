@@ -38,6 +38,9 @@ final class RecipeUpdateAction
         
         return $response
             ->withHeader('Content-Type', 'application/json')
-            ->withStatus($responseCode);
+            ->withStatus($responseCode)
+            ->withHeader('Access-Control-Allow-Origin', 'https://recipeweb.jonathancote.ca')
+            ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
+            ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');;
     }
 }
