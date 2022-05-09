@@ -68,7 +68,7 @@ paths:
               schema:
                 $ref: "#/definitions/OperationResult"
   /recipe/{id}:
-    post:
+    put:
       tags:
       - "Recette"
       summary: "Modifier une recette"
